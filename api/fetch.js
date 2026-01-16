@@ -57,8 +57,12 @@ export default async function handler(req, res) {
         res.setHeader('Content-Type', 'text/plain');
         return res.status(200).send(response.data);
 
-    } catch (error) {
-        console.error("❌ GitHub Error:", error.message);
-        return res.status(500).json({ error: "Sync Failed: Could not connect to GitHub" });
-    }
+    // catch බ්ලොක් එක මෙහෙම වෙනස් කරන්න
+} catch (error) {
+    console.error("❌ GitHub Error Details:", error.response ? error.response.data : error.message);
+    return res.status(500).json({ 
+        error: "Sync Failed", 
+        details: error.response ? error.response.data : error.message 
+    });
+}
 }
